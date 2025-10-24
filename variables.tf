@@ -13,3 +13,9 @@ variable "vpc_env" {
   type        = string
   description = "ENVを指定する"
 }
+
+variable "vpc_tags" {
+  type = map(string)
+  default = {}
+  description = "VPCリソースに付与したいタグ"
+}
