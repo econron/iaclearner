@@ -15,7 +15,19 @@ variable "vpc_env" {
 }
 
 variable "vpc_tags" {
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
   description = "VPCリソースに付与したいタグ"
+}
+
+variable "vpc_additional_tags" {
+  type        = map(string)
+  default     = {}
+  description = "VPCに付与したい追加タグ"
+
+  validation {
+    // 必須タグと重複するものがあればバリデーションエラーにする
+    condition     = length(setintersection(keys(var.vpc_additional_tags), ["Name", "Env"])) == 0
+    error_message = "Key names, Name and Env is reserved. Not allowed to use them."
+  }
 }

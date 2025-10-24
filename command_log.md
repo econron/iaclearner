@@ -160,3 +160,11 @@ VPCピアリング、AWS Transit Gatewayを使ったVPC間の相互接続がで�
 AWS Direct Connect, AWS Site-to-Site VPNを使ってオンプレとVPCを相互接続する際、ネットワークのCIDRが重複していると接続できない。
 
 -> VPCに割り当てるCIDRを変数で指定する
+
+### varを指定して実行する
+
+```sh
+terraform plan -var-file=env/ok.tfvars
+terraform apply -var-file=env/ok.tfvars
+terraform destroy -var-file=env/ok.tfvars
+```
