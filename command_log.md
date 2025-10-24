@@ -128,3 +128,35 @@ Terraform will perform the following actions:
 のようにtaroだけdestroyする
 
 for_eachに渡す際はtosetを利用すると良い。
+
+## 9章
+
+CDパイプライン上では--auto-approveオプションをつけるなどする
+
+```sh
+terraform apply --auto-approve
+```
+
+### コードレビュー
+
+```tf
+resource "aws_vpc" "vpc" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "sample"
+    Env = "dev"
+  }
+}
+```
+
+- VPCに割り当てるCIDRがstatic
+- VPCの名前が固定されている
+- 環境識別子がstatic
+- タグのキーが固定されている
+
+#### VPCに割り当てるCIDRがstatic
+
+VPCピアリング、AWS Transit Gatewayを使ったVPC間の相互接続ができなくなる。
+AWS Direct Connect, AWS Site-to-Site VPNを使ってオンプレとVPCを相互接続する際、ネットワークのCIDRが重複していると接続できない。
+
+-> VPCに割り当てるCIDRを変数で指定する
