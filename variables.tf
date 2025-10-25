@@ -4,12 +4,12 @@ variable "vpc_cidr_block" {
   description = "VPCに割り当てるCIDRブロックの記述"
 }
 
-variable "vpc_name" {
+variable "service_name" {
   type        = string
-  description = "VPCの名前を指定する"
+  description = "VPCを利用するサービス名"
 }
 
-variable "vpc_env" {
+variable "env" {
   type        = string
   description = "ENVを指定する"
 }
