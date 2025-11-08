@@ -52,7 +52,7 @@ variable "subnet_cidrs" {
     condition = (
       length([
         for cidr in var.subnet_cidrs.private : cidr
-        if regex("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}/\\d{1,2}$", cidr)
+        if can(regex("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}/\\d{1,2}$", cidr))
       ]) == length(var.subnet_cidrs.private)
     )
     error_message = "Specify VPC Private Subnet CIDR block with the CIDR format."

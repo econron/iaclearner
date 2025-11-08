@@ -9,11 +9,6 @@ output "vpc_name" {
   value = aws_vpc.vpc.tags["Name"]
 }
 
-output "vpc_id" {
-  description = "VPCのIDです"
-  value = aws_vpc.vpc.id
-}
-
 output "public_subnets" {
   description = "パブリックサブネットの情報です"
   value = {for subnet in aws_subnet.public_subnets : subnet.availability_zone => subnet.id}
