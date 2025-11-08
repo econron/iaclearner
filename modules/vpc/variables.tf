@@ -57,4 +57,28 @@ variable "subnet_cidrs" {
     )
     error_message = "Specify VPC Private Subnet CIDR block with the CIDR format."
   }
+
+  # 可用性のためのバリデーション
+  validation {
+    condition = length(var.subnet_cidrs.public) >= 2
+    error_message = "For availability, set more than or equal to public subnet cidrs."
+  }
+  validation {
+    condition = length(var.subnet_cidrs.private) >= 2
+    error_message = "For availability, set more than or equal to private subnet cidrs."
+  }
+  validation {
+    condition = length(var.subnet_cidrs.public) == length(var.subnet_cidrs.private)
+    error_message = "Redundancy of public subnet and private subnet must be same."
+  }
+}
+
+variable "igw_additional_tags" {
+  description = "igwに付与したいタグ"
+  type = map(string)
+  default = {}
+  validation {
+    condition = length(setintersection(keys(var.igw_additional_tags), ["Name", "Env", "VpcId"])) == 0
+    error_message = "Key names, Name and Evn, VpcId are reserved. Not allowed to use them."
+  }
 }
