@@ -1,6 +1,6 @@
 locals {
   from_az_to_public_subnet_id = {
-    for cidr in keys(aws_subnet.public_subnets) : aws_subnet.aws_subnet.public_subnets[cidr].tags["AvailabilityZone"] => aws_subnet.public_subnets[cidr].id
+    for cidr in keys(aws_subnet.public_subnets) : aws_subnet.public_subnets[cidr].tags["AvailabilityZone"] => aws_subnet.public_subnets[cidr].id
   }
 }
 

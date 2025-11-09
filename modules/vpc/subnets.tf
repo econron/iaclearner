@@ -6,6 +6,15 @@ resource "aws_subnet" "public_subnets" {
   availability_zone = data.aws_availability_zones.availability_zones.names[
     index(var.subnet_cidrs.public, each.key) % local.number_of_availability_zones
   ]
+  tags = {
+    Name = "${var.service_name}-${var.env}-${data.aws_availability_zones.availability_zones.names[
+    index(var.subnet_cidrs.public, each.key) % local.number_of_availability_zones
+  ]}-public-subnet"
+    AvailabilityZone = data.aws_availability_zones.availability_zones.names[
+    index(var.subnet_cidrs.public, each.key) % local.number_of_availability_zones
+  ]
+    Scope = "public"
+  }
 }
 
 resource "aws_subnet" "private_subnets" {
@@ -14,6 +23,15 @@ resource "aws_subnet" "private_subnets" {
   vpc_id = aws_vpc.vpc.id
 
   availability_zone = data.aws_availability_zones.availability_zones.names[
-    index(var.subnet_cidrs.public, each.key) % local.number_of_availability_zones
+    index(var.subnet_cidrs.private, each.key) % local.number_of_availability_zones
   ]
+  tags = {
+    Name = "${var.service_name}-${var.env}-${data.aws_availability_zones.availability_zones.names[
+    index(var.subnet_cidrs.private, each.key) % local.number_of_availability_zones
+  ]}-private-subnet"
+    AvailabilityZone = data.aws_availability_zones.availability_zones.names[
+    index(var.subnet_cidrs.private, each.key) % local.number_of_availability_zones
+  ]
+    Scope = "private"
+  }
 }

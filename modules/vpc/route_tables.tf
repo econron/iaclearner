@@ -26,7 +26,7 @@ resource "aws_route_table_association" "public_route_table_associations" {
 
 resource "aws_route_table" "private_route_tables" {
   for_each = aws_subnet.private_subnets
-  vpc_id = aws_vpc.vpc_id
+  vpc_id = aws_vpc.vpc.id
   tags = {
     Name = "${var.service_name}-${var.env}-${each.value.availability_zone}-private-route-table"
     AvailabilityZone = each.value.availability_zone
@@ -37,7 +37,7 @@ resource "aws_route_table" "private_route_tables" {
 # private subnet用のルートテーブル関連付け
 resource "aws_route_table_association" "private_route_table_associations" {
   for_each = aws_subnet.private_subnets
-  route_table_id = aws_route.private_route_tables[each.key].id
+  route_table_id = aws_route_table.private_route_tables[each.key].id
   subnet_id = each.value.id
 }
 
